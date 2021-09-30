@@ -1288,6 +1288,11 @@
   "resolved" "https://registry.npmjs.org/@react-native-firebase/auth/-/auth-12.8.0.tgz"
   "version" "12.8.0"
 
+"@react-native-google-signin/google-signin@^7.0.0-alpha.3":
+  "integrity" "sha512-LhI4eycxYx5T5IBB0kinEoE71Who3Fk67Y3z13PyloVa0XpgVc/ikYZzeZpFXoVvJmsHexS/NYGpd7Nau1IYQg=="
+  "resolved" "https://registry.npmjs.org/@react-native-google-signin/google-signin/-/google-signin-7.0.0-alpha.3.tgz"
+  "version" "7.0.0-alpha.3"
+
 "@react-native-picker/picker@^1.9.10":
   "integrity" "sha512-pacdQDX6V6EmjF+HoiIh6u++qx4mTK0WnhgUHRc01B+Qt5eoeUwseBqmqfTSXTx/aHDEd6PiIw7UGvKgFoqgFQ=="
   "resolved" "https://registry.npmjs.org/@react-native-picker/picker/-/picker-1.16.8.tgz"
