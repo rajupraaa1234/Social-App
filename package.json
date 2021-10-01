@@ -11,10 +11,12 @@
   },
   "dependencies": {
     "@ant-design/react-native": "^4.2.0",
+    "@mdi/font": "^6.1.95",
     "@react-native-async-storage/async-storage": "^1.15.8",
     "@react-native-firebase/app": "^12.8.0",
     "@react-native-firebase/auth": "^12.8.0",
     "@react-native-google-signin/google-signin": "^7.0.0-alpha.3",
+    "@react-navigation/bottom-tabs": "^6.0.7",
     "@react-navigation/native": "^6.0.4",
     "@react-navigation/native-stack": "^6.2.2",
     "react": "17.0.2",
@@ -23,7 +25,8 @@
     "react-native-onboarding-swiper": "^1.1.4",
     "react-native-safe-area-context": "^3.3.2",
     "react-native-screens": "^3.8.0",
-    "react-native-vector-icons": "^8.1.0"
+    "react-native-vector-icons": "^8.1.0",
+    "styled-components": "^5.3.1"
   },
   "devDependencies": {
     "@babel/core": "^7.15.5",
