@@ -12,7 +12,7 @@ import Util from '../../../Utility/Util';
 // create a component
 const Login = ({navigation}) => {
     const[email,setEmail]  = useState();
-    const{login,googleLogin} = useContext(AuthContext);
+    const{login,googleLogin,FbLogin} = useContext(AuthContext);
     const[password,setPassword] = useState();
     const[msg,setMsg] = useState();
     
@@ -42,7 +42,7 @@ const Login = ({navigation}) => {
     };
 
     const fbLogin = () =>{
-
+      FbLogin();
     }
     const googleLogin1 = () =>{
       googleLogin();
