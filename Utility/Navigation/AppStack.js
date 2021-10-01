@@ -2,12 +2,14 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React, {useState, useEffect} from 'react';
 import HomeScreen from '../../app/Screen/HomeScreen';
 import Chat from '../../app/Screen/Chat';
-import {View} from 'react-native';
+import {TouchableOpacity, View} from 'react-native';
+import { Text } from 'react-native';
 import Profile from '../../app/Screen/Profile';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import  MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
+import Addpost from '../../app/Screen/Addpost';
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
@@ -34,15 +36,36 @@ const FeedStack = ({navigation}) =>{
                           size={22}
                           backgroundColor="#fff"
                           color="#2e64e5"
-                          onPress={{}}
+                          onPress={()=>navigation.navigate('Addpost')}
                         />
                       </View>
                     ),
                   }}
                 
                 />
+            <Stack.Screen name="Addpost" component={Addpost}
+                  options={{
+                    title: '',
+                    headerTitleAlign: 'center',
+                    headerStyle: {
+                      shadowColor: '#2e64e515',
+                      elevation: 0,
+                    },
+                    headerBackTitleVisible: false,
+                    headerBackImage: () => (
+                      <View style={{marginLeft: 15}}>
+                        <Ionicons name="arrow-back" size={25} color="#2e64e5" />
+                      </View>
+                    ),
+                    headerRight: () => (
+                        <TouchableOpacity style={{marginRight: 10}}>
+                            <Text style={{fontSize:16,color:"#2e64e5"}}>Post</Text>
+                        </TouchableOpacity>
+                      ),
+                  }}
+             />
         </Stack.Navigator>
-   )
+   );
     
 }
 

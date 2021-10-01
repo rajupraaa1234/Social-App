@@ -14,6 +14,24 @@ import { Card, Container, Divider, Interaction, InteractionText, InteractionWrap
 // create a component
 const PostItem = ({item}) => {
     likeIcon = item.liked ? 'heart' : 'heart-outline';
+    likeIconColor = item.liked ? '#2e64e5' : '#333';
+
+    if(item.likes==1){
+        likeText = '1 Like';
+    }else if(item.likes>1){
+        likeText = item.likes + ' Likes';
+    }else{
+        likeText = 'Like'
+    }
+
+    if(item.comments==1){
+        commentText = '1 Comment';
+    }else if(item.likes>1){
+        commentText = item.comments + ' Comments';
+    }else{
+        commentText = 'Comment'
+    }
+
     return (
         <Card>
         <UserInfo>
@@ -28,13 +46,13 @@ const PostItem = ({item}) => {
         {/* <PostImg source = {require('../../assets/post.jpg')} /> */}
         {/* <Divider /> */}
         <InteractionWrapper>
-            <Interaction>
-                <Ionicons name={likeIcon} size={25} />
-                <InteractionText>Like</InteractionText>
+            <Interaction active={item.liked}>
+                <Ionicons name={likeIcon} size={25} color={likeIconColor} />
+                <InteractionText active={item.liked}>{likeText}</InteractionText>
             </Interaction>
             <Interaction>
                 <Ionicons name="md-chatbubble-outline" size={25} />
-                <InteractionText>Comment</InteractionText>
+                <InteractionText>{commentText}</InteractionText>
             </Interaction>
         </InteractionWrapper>
     </Card>
