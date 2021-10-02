@@ -1,12 +1,14 @@
 //import liraries
-import React, { Component, useState } from 'react';
+import React, { Component, useState,useContext } from 'react';
 import { View, Text, StyleSheet,Image, Dimensions, Platform,TouchableOpacity, Alert, ActivityIndicator } from 'react-native';
 import { InputField, InputWrapper, StatusWrapper, SubmitBtn } from '../../styles/AddPostStyle';
 import ActionButton from 'react-native-action-button';
 import { FloatingAction } from "react-native-floating-action";
 import { Icon } from 'react-native-vector-icons/Ionicons';
 import storage from '@react-native-firebase/storage';
+import firestore from '@react-native-firebase/firestore';
 import ImagePicker from 'react-native-image-crop-picker';
+import { AuthContext } from '../../Utility/Navigation/AuthProvider.android';
 
 
 
@@ -28,9 +30,11 @@ const actions = [
 
 // create a component
 const Addpost = () => {
+    const{user} = useContext(AuthContext)
     const[img,setImg] = useState(null);
     const[uploading,setUploading] = useState(false);
     const[transfer,setTranser] = useState(0);
+    const[post,setPost] = useState(null);
     const w = Dimensions.get('window').width;
     const ImgeFromCamera = () =>{
         ImagePicker.openCamera({
@@ -63,7 +67,41 @@ const Addpost = () => {
             console.log(error);
         });
     }
-    const OnSubmit = async ()=>{
+
+    const OnSubmit = async () =>{
+          const url = await UploadImg();
+          setUploading(true);
+          setTranser(100);
+          firestore()
+          .collection('posts')
+          .add({
+               userId : user.uid,
+               post : post,
+               postImg : url,
+               postTime : firestore.Timestamp.fromDate(new Date()),
+               likes : 0,
+               comments : 0,
+          })
+          .then(()=>{
+               console.log('Post Added');
+               Alert.alert(
+                   'Post Published',
+                   'Your post has been published'
+               );
+               setPost(null);
+               setUploading(false);
+               setTranser(0);
+          })
+          .catch((error)=>{
+             console.log('Something went wrong with added post to firestore.', error);
+               setPost(null);
+               setUploading(false);
+               setTranser(0);
+          });
+         // console.log(url);
+    }
+    const UploadImg = async ()=>{
+        if(img==null) return null;
         const uploadUri = img;
         let filename = uploadUri.substring(uploadUri.lastIndexOf('/') + 1);
         const extension = filename.split('.').pop(); 
@@ -72,21 +110,24 @@ const Addpost = () => {
 
         setUploading(true);
         setTranser(0);
+        const storageRef = storage().ref(`photos/${filename}`);
+        const task = storageRef.putFile(uploadUri); 
+        task.on('state_changed', taskSnapshot => {
+            setTranser(
+               Math.round(taskSnapshot.bytesTransferred / taskSnapshot.totalBytes) *100
+            );
+        });
         try{
-            const task = storage().ref(filename).putFile(uploadUri); 
-           task.on('state_changed', taskSnapshot => {
-               setTranser(
-                  Math.round(taskSnapshot.bytesTransferred / taskSnapshot.totalBytes) *100
-               );
-               setUploading(false);
-           });
-           
+            await task;
+            const url = await storageRef.getDownloadURL();
+            setImg(null);
+            setUploading(false);
+            return url;
         }catch(e){
             setUploading(false);
             setTranser(0);
-            console.log(e); 
+            return null; 
         }
-       setImg(null);
     }
     return (
         <View style={styles.container}>
@@ -96,6 +137,8 @@ const Addpost = () => {
                         placeholder="What's on your mind"
                         multiline
                         numberOfLines={4}
+                        value={post}
+                        onChangeText={(content)=>setPost(content)}
                         >
                     </InputField>
                     {uploading ? (

@@ -1,7 +1,7 @@
 //import liraries
-import React, { Component } from 'react';
+import React, { Component, useContext } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import Ionicons from 'react-native-vector-icons/Ionicons'
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Card, Container, Divider, Interaction, InteractionText, InteractionWrapper, PostImg,
      PostText,
       PostTime,
@@ -10,11 +10,18 @@ import { Card, Container, Divider, Interaction, InteractionText, InteractionWrap
        UserInfoText, 
        UserName 
 } from '../styles/HomeStyle';
+import ProgressiveImage from '../Utility/ProgressiveImage'
+import moment from 'moment';
+import { AuthContext } from '../Utility/Navigation/AuthProvider.android';
 
 // create a component
-const PostItem = ({item}) => {
-    likeIcon = item.liked ? 'heart' : 'heart-outline';
-    likeIconColor = item.liked ? '#2e64e5' : '#333';
+const PostItem = ({item,onDelete}) => {
+    const{user} = useContext(AuthContext);
+    // likeIcon = item.liked ? 'heart' : 'heart-outline';
+    // likeIconColor = item.liked ? '#2e64e5' : '#333';
+
+    likeIcon = 'heart';
+    likeIconColor = '#2e64e5';
 
     if(item.likes==1){
         likeText = '1 Like';
@@ -35,14 +42,22 @@ const PostItem = ({item}) => {
     return (
         <Card>
         <UserInfo>
-            <UserImg source = {item.userImg}/>
+            <UserImg source = {{uri : item.userImg}}/>
             <UserInfoText>
                  <UserName>{item.userName}</UserName>
-                 <PostTime>{item.postTime}</PostTime>
+                 <PostTime>{moment(item.postTime.toDate()).fromNow()}</PostTime>
             </UserInfoText>
         </UserInfo>
         <PostText>{item.post}</PostText>
-        {item.postImg != 'none' ? <PostImg source={item.postImg} />  : <Divider />}
+        {item.postImg != null ? (
+            <ProgressiveImage
+                source={{uri: item.postImg}}
+                style={{width: '100%', height: 250}}
+                resizeMode="cover"
+            /> 
+          )  
+          : 
+          <Divider />}
         {/* <PostImg source = {require('../../assets/post.jpg')} /> */}
         {/* <Divider /> */}
         <InteractionWrapper>
@@ -54,6 +69,11 @@ const PostItem = ({item}) => {
                 <Ionicons name="md-chatbubble-outline" size={25} />
                 <InteractionText>{commentText}</InteractionText>
             </Interaction>
+            {user.uid === item.userId ? (
+                <Interaction onPress={()=>{onDelete(item.id)}}>
+                   <Ionicons name="md-trash-bin" size={25} />
+                </Interaction>
+            ) : null}
         </InteractionWrapper>
     </Card>
     );
