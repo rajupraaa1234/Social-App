@@ -1315,6 +1315,11 @@
   "resolved" "https://registry.npmjs.org/@react-native-firebase/auth/-/auth-12.8.0.tgz"
   "version" "12.8.0"
 
+"@react-native-firebase/storage@^12.8.0":
+  "integrity" "sha512-P2ygmVrCzF3mxkNyG1VcpwTNc16PLGOsy6Svc2TIpXkEqtuDFXrvMX5uFigPcMBAPa0THRACGQaUPKYpEEfGgQ=="
+  "resolved" "https://registry.npmjs.org/@react-native-firebase/storage/-/storage-12.8.0.tgz"
+  "version" "12.8.0"
+
 "@react-native-google-signin/google-signin@^7.0.0-alpha.3":
   "integrity" "sha512-LhI4eycxYx5T5IBB0kinEoE71Who3Fk67Y3z13PyloVa0XpgVc/ikYZzeZpFXoVvJmsHexS/NYGpd7Nau1IYQg=="
   "resolved" "https://registry.npmjs.org/@react-native-google-signin/google-signin/-/google-signin-7.0.0-alpha.3.tgz"
@@ -6343,6 +6348,11 @@
     "invariant" "^2.2.4"
     "prop-types" "^15.7.2"
 
+"react-native-image-crop-picker@^0.36.4":
+  "integrity" "sha512-FOWkYbCEh78V5/aK9HqMSvRnQJtelGwj0UOu1zhE49gO6e4YoKKNBvA15jweAMM/kPA+omDXBIgJaruonoEXGA=="
+  "resolved" "https://registry.npmjs.org/react-native-image-crop-picker/-/react-native-image-crop-picker-0.36.4.tgz"
+  "version" "0.36.4"
+
 "react-native-modal-popover@^2.0.1":
   "integrity" "sha512-t7KMk1q5Hi3jkk3/0fpa3mA7E3TJLL/Uz48Fa07AlocjMbG3okim9fNPLf5dJGw4JlcYWxLMYeswEcTjKr0M1g=="
   "resolved" "https://registry.npmjs.org/react-native-modal-popover/-/react-native-modal-popover-2.1.0.tgz"
@@ -6428,7 +6438,7 @@
     "whatwg-fetch" "^3.0.0"
     "ws" "^6.1.4"
 
-"react-native@*", "react-native@^0.0.0-0 || ^0.60.6 || ^0.61.5 || ^0.62.2 || ^0.63.2 || ^0.64.0 || ^0.65.0 || 1000.0.0", "react-native@^0.65.0", "react-native@>=0.11", "react-native@>=0.57", "react-native@>=0.60", "react-native@>=0.62", "react-native@>=0.63.3", "react-native@>0.50.0", "react-native@0.65.1":
+"react-native@*", "react-native@^0.0.0-0 || ^0.60.6 || ^0.61.5 || ^0.62.2 || ^0.63.2 || ^0.64.0 || ^0.65.0 || 1000.0.0", "react-native@^0.65.0", "react-native@>=0.11", "react-native@>=0.40.0", "react-native@>=0.57", "react-native@>=0.60", "react-native@>=0.62", "react-native@>=0.63.3", "react-native@>0.50.0", "react-native@0.65.1":
   "integrity" "sha512-0UOVSnlssweQZjuaUtzViCifE/4tXm8oRbxwakopc8GavPu9vLulde145GOw6QVYiOy4iL50f+2XXRdX9NmMeQ=="
   "resolved" "https://registry.npmjs.org/react-native/-/react-native-0.65.1.tgz"
   "version" "0.65.1"

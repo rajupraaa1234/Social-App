@@ -16,3 +16,16 @@ export const InputField = styled.TextInput`
      width: 90%;
 `;
 
+export const StatusWrapper = styled.View`
+    justify-content: center;
+    align-items: center;
+`;
+
+export const SubmitBtn = styled.TouchableOpacity`
+    flex-direction: row;
+    justify-content: center;
+    background-color: #2e64e515;
+    border-radius: 5px;
+    padding: 10px 25px;
+`;
+
