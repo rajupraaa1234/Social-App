@@ -1,6 +1,6 @@
 //import liraries
 import React, { Component, useContext } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Card, Container, Divider, Interaction, InteractionText, InteractionWrapper, PostImg,
      PostText,
@@ -15,7 +15,7 @@ import moment from 'moment';
 import { AuthContext } from '../Utility/Navigation/AuthProvider.android';
 
 // create a component
-const PostItem = ({item,onDelete}) => {
+const PostItem = ({item,onDelete,onPress}) => {
     const{user} = useContext(AuthContext);
     // likeIcon = item.liked ? 'heart' : 'heart-outline';
     // likeIconColor = item.liked ? '#2e64e5' : '#333';
@@ -44,13 +44,16 @@ const PostItem = ({item,onDelete}) => {
         <UserInfo>
             <UserImg source = {{uri : item.userImg}}/>
             <UserInfoText>
-                 <UserName>{item.userName}</UserName>
+                <TouchableOpacity onPress={onPress}>
+                    <UserName>{item.userName}</UserName>
+                </TouchableOpacity>
                  <PostTime>{moment(item.postTime.toDate()).fromNow()}</PostTime>
             </UserInfoText>
         </UserInfo>
         <PostText>{item.post}</PostText>
         {item.postImg != null ? (
             <ProgressiveImage
+                defaultImageSource = {require('../assets/default-img.jpg')}
                 source={{uri: item.postImg}}
                 style={{width: '100%', height: 250}}
                 resizeMode="cover"
@@ -58,8 +61,6 @@ const PostItem = ({item,onDelete}) => {
           )  
           : 
           <Divider />}
-        {/* <PostImg source = {require('../../assets/post.jpg')} /> */}
-        {/* <Divider /> */}
         <InteractionWrapper>
             <Interaction active={item.liked}>
                 <Ionicons name={likeIcon} size={25} color={likeIconColor} />

@@ -4,6 +4,8 @@ import { View, Text, StyleSheet } from 'react-native';
 import auth from '@react-native-firebase/auth'
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { LoginManager, AccessToken } from 'react-native-fbsdk-next';
+import firestore from '@react-native-firebase/firestore';
+
 
 export const AuthContext = createContext();
 
@@ -26,8 +28,28 @@ const AuthProvider = ({children}) => {
                },
                register : async (email,password,onCancel,onSuccess)=>{
                    try{
-                        await auth().createUserWithEmailAndPassword(email,password); 
-                        onSuccess();
+                         await auth().createUserWithEmailAndPassword(email, password)
+                         .then(() => {
+                            onSuccess();
+                            //Once the user creation has happened successfully, we can add the currentUser into firestore
+                            //with the appropriate details.
+                            firestore().collection('users').doc(auth().currentUser.uid)
+                            .set({
+                                fname: '',
+                                lname: '',
+                                email: email,
+                                createdAt: firestore.Timestamp.fromDate(new Date()),
+                                userImg: null,
+                            })
+                            //ensure we catch any errors at this stage to advise us if something does go wrong
+                            .catch(error => {
+                                console.log('Something went wrong with added user to firestore: ', error);
+                            })
+                            })
+                            //we need to catch the whole sign up process if it fails too.
+                            .catch(error => {
+                                console.log('Something went wrong with sign up: ', error);
+                            });
                    }
                    catch(e){
                        console.log(e);

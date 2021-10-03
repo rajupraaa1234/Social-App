@@ -1,7 +1,8 @@
 //import liraries
 import React, { Component,useContext,useEffect, useState } from 'react';
-import { View, Text, StyleSheet,Button, FlatList,Alert,RefreshControl } from 'react-native';
+import { View, Text, StyleSheet,Button, FlatList,Alert,RefreshControl,ScrollView ,Dimensions} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons'
+import SkeletonPlaceholder from "react-native-skeleton-placeholder";
 import PostItem from '../../Components/PostItem';
 import storage from '@react-native-firebase/storage';
 import firestore from '@react-native-firebase/firestore';
@@ -70,12 +71,14 @@ const Posts = [
     },
   ];
   
-const HomeScreen = () => {
+const HomeScreen = ({navigation}) => {
 
     const[posts,setPosts] = useState(null);
     const [deleted, setDeleted] = useState(false);
+    const[loading,setLoading] = useState(true);
     const [refreshing, setRefreshing] = React.useState(false);
     const fetchList = async () =>{
+          setLoading(true);
                 try{
                       const list = [];
                       await firestore()
@@ -108,8 +111,10 @@ const HomeScreen = () => {
                         });
                         console.log(list);
                     setPosts(list);
+                    setLoading(false);
                 }catch(e){
                    console.log(e);
+                   setLoading(false);
                 };    
     };
 
@@ -195,16 +200,72 @@ const HomeScreen = () => {
     };
     return (
            <Container>
-               <FlatList
-                  data={posts}
-                  renderItem = {({item})=> <PostItem item ={item} onDelete={handleDelete}/>}
-                  keyExtractor={item=>item.id} 
-                  refreshControl
-                  refreshControl={
-                    <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-                  }
-                  showsVerticalScrollIndicator={false}
-               />
+               {loading ? (
+                   <ScrollView showsVerticalScrollIndicator={false}>
+                   <SkeletonPlaceholder >
+                       <View style={{ flexDirection: "row", alignItems: "center" }}>
+                           <View style={{ width: 60, height: 60, borderRadius: 50 }} />
+                           <View style={{ marginLeft: 20 }}>
+                           <View style={{ width: 120, height: 20, borderRadius: 4 }} />
+                           <View
+                               style={{ marginTop: 6, width: 80, height: 20, borderRadius: 4 }}
+                           />
+                           </View>
+                       </View>
+                       <View style={{marginTop:8}}>
+                           <View style={{ width: 160, height: 20, marginTop:10, borderRadius: 4 }} />
+                       </View>
+                       <View style={{marginTop:10,marginBottom:10}}>
+                           <View style={{ width: Dimensions.get('window').width, height: 220, marginTop:10, borderRadius: 4 }} />
+                       </View>
+                    </SkeletonPlaceholder>
+                    <SkeletonPlaceholder>
+                       <View style={{ flexDirection: "row", alignItems: "center" }}>
+                           <View style={{ width: 60, height: 60, borderRadius: 50 }} />
+                           <View style={{ marginLeft: 20 }}>
+                           <View style={{ width: 120, height: 20, borderRadius: 4 }} />
+                           <View
+                               style={{ marginTop: 6, width: 80, height: 20, borderRadius: 4 }}
+                           />
+                           </View>
+                       </View>
+                       <View style={{marginTop:8}}>
+                           <View style={{ width: 160, height: 20, marginTop:10, borderRadius: 4 }} />
+                       </View>
+                       <View style={{marginTop:10,marginBottom:8}}>
+                           <View style={{ width: Dimensions.get('window').width, height: 220, marginTop:10, borderRadius: 4 }} />
+                       </View>
+                    </SkeletonPlaceholder>
+                    <SkeletonPlaceholder>
+                       <View style={{ flexDirection: "row", alignItems: "center" }}>
+                           <View style={{ width: 60, height: 60, borderRadius: 50 }} />
+                           <View style={{ marginLeft: 20 }}>
+                           <View style={{ width: 120, height: 20, borderRadius: 4 }} />
+                           <View
+                               style={{ marginTop: 6, width: 80, height: 20, borderRadius: 4 }}
+                           />
+                           </View>
+                       </View>
+                       <View style={{marginTop:8}}>
+                           <View style={{ width: 160, height: 20, marginTop:10, borderRadius: 4 }} />
+                       </View>
+                       <View style={{marginTop:10}}>
+                           <View style={{ width: Dimensions.get('window').width, height: 220, marginTop:10, borderRadius: 4 }} />
+                       </View>
+                    </SkeletonPlaceholder>
+                 </ScrollView>
+               ) : (
+                <FlatList
+                    data={posts}
+                    renderItem = {({item})=> <PostItem item ={item} onDelete={handleDelete} onPress={()=>navigation.navigate('HomeProfile',{userId : item.userId})}/>}
+                    keyExtractor={item=>item.id} 
+                    refreshControl
+                    refreshControl={
+                      <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+                    }
+                    showsVerticalScrollIndicator={false}
+                 />
+              )} 
            </Container>   
     );
 };

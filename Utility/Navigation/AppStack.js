@@ -10,6 +10,7 @@ import  MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunity
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import Addpost from '../../app/Screen/Addpost';
+import EditProfile from '../../app/Screen/EditProfile';
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
@@ -57,11 +58,23 @@ const FeedStack = ({navigation}) =>{
                         <Ionicons name="arrow-back" size={25} color="#2e64e5" />
                       </View>
                     ),
-                    // headerRight: () => (
-                    //     <TouchableOpacity style={{marginRight: 10}}>
-                    //         <Text style={{fontSize:16,color:"#2e64e5"}}>Post</Text>
-                    //     </TouchableOpacity>
-                    //   ),
+                  }}
+             />
+             <Stack.Screen name="HomeProfile" component={Profile} 
+                  options={{
+                    title: '',
+                    headerTitleAlign: 'center',
+                    headerStyle: {
+                      backgroundColor:'#fff',
+                      shadowColor: '#fff',
+                      elevation: 0,
+                    },
+                    headerBackTitleVisible: false,
+                    headerBackImage: () => (
+                      <View style={{marginLeft: 15}}>
+                        <Ionicons name="arrow-back" size={25} color="#2e64e5" />
+                      </View>
+                    ),
                   }}
              />
         </Stack.Navigator>
@@ -88,6 +101,20 @@ const ProfileStack = ({navigation}) =>{
                     headerShown:false,
                 }}
                />
+             <Stack.Screen  
+                 name="EditProfile"
+                 component={EditProfile}
+                 options={{
+                   headerTitle:"Edit Profile",
+                   headerBackTitleVisible : false,
+                   headerTitleAlign:'center',
+                   headerStyle:{
+                     backgroundColor:'#fff',
+                     shadowColor:'#fff',
+                     elevation:0,
+                   },
+                 }}
+             />  
         </Stack.Navigator>
   )
     
