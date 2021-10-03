@@ -4,6 +4,5 @@ This is simple Social App using React native in this user can post the post publ
 UI Login
 
 ![login](https://user-images.githubusercontent.com/48593134/135772030-5338740f-322a-49b1-bce1-291f37a630ae.png)
-
 ![signUp](https://user-images.githubusercontent.com/48593134/135772080-601c132e-7d06-46cc-aae5-8d619262a7d4.png)
  
