@@ -57,6 +57,9 @@ const Profile = ({navigation,route}) => {
                       });
                       console.log(list);
                   setPosts(list);
+                  if (loading) {
+                    setLoading(false);
+                  }
                  // setLoading(false);
               }catch(e){
                  console.log(e);
@@ -68,6 +71,26 @@ const Profile = ({navigation,route}) => {
         fetchList();
     },[]);
 
+
+    const getUser = async() => {
+      await firestore()
+      .collection('users')
+      .doc( route.params ? route.params.userId : user.uid)
+      .get()
+      .then((documentSnapshot) => {
+        if( documentSnapshot.exists ) {
+          console.log('User Data', documentSnapshot.data());
+          setUserData(documentSnapshot.data());
+        }
+      })
+    }
+
+    useEffect(() => {
+      getUser();
+      fetchList();
+      navigation.addListener("focus", () => setLoading(!loading));
+    }, [navigation, loading]);
+
     return (
          <SafeAreaView style={{flex:1,backgroundColor:'#fff'}}>
              <ScrollView
@@ -76,11 +99,14 @@ const Profile = ({navigation,route}) => {
                 showsVerticalScrollIndicator={false}
              >
                  <Image
-                     style={styles.userImg}
-                     source={require('../../assets/user1.jpg')}
+                    style={styles.userImg}
+                    source={{uri: userData ? userData.userImg || 'https://lh5.googleusercontent.com/-b0PKyNuQv5s/AAAAAAAAAAI/AAAAAAAAAAA/AMZuuclxAM4M1SCBGAO7Rp-QP6zgBEUkOQ/s96-c/photo.jpg' : 'https://lh5.googleusercontent.com/-b0PKyNuQv5s/AAAAAAAAAAI/AAAAAAAAAAA/AMZuuclxAM4M1SCBGAO7Rp-QP6zgBEUkOQ/s96-c/photo.jpg'}}
                  />
-                 <Text style={styles.userName}>Raju kumar</Text>
-                 <Text style={styles.aboutUser}> Hay I ma raju kumar i have done mca from nit calicut</Text>
+                 <Text style={styles.userName}>{userData ? userData.fname || 'Test' : 'Test'} {userData ? userData.lname || 'User' : 'User'}</Text>
+                   
+                 <Text style={styles.aboutUser}>
+                  {userData ? userData.about || 'No details added.' : ''}
+                 </Text>
                  <View style={styles.userBtnWrapper}>
                     {route.params ? (
                          <>
@@ -105,7 +131,7 @@ const Profile = ({navigation,route}) => {
                  </View> 
                  <View style={styles.userInfoWrapper}>
                          <View style={styles.userInfoItem}>
-                              <Text style={styles.userInfoTitle}>22</Text>
+                              <Text style={styles.userInfoTitle}>{posts.length}</Text>
                               <Text style={styles.userInfoSubTitle}>Posts</Text>
                          </View>
                          <View style={styles.userInfoItem}>
