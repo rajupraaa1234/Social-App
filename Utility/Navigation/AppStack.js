@@ -140,7 +140,7 @@ const AppStack = () =>{
                     ),
                 })}
             />
-            <Tab.Screen name="ChatStack" component={ChatStack} 
+            {/* <Tab.Screen name="ChatStack" component={ChatStack} 
                 options={({route}) => ({
                     tabBarLabel: 'Chat',
                     tabBarIcon: ({color, size}) => (
@@ -151,7 +151,7 @@ const AppStack = () =>{
                       />
                     ),
                   })}
-            />
+            /> */}
             <Tab.Screen name="ProfileStack" component={ProfileStack} 
                 options={{
                     tabBarLabel: 'Profile',
