@@ -76,6 +76,7 @@ const HomeScreen = ({navigation}) => {
     const[posts,setPosts] = useState(null);
     const [deleted, setDeleted] = useState(false);
     const[loading,setLoading] = useState(true);
+    const[loadList,setLoadList] = useState(true);
     const [refreshing, setRefreshing] = React.useState(false);
     const fetchList = async () =>{
           setLoading(true);
@@ -112,6 +113,9 @@ const HomeScreen = ({navigation}) => {
                         console.log(list);
                     setPosts(list);
                     setLoading(false);
+                    if(setLoadList){
+                      setLoadList(false);
+                    }
                 }catch(e){
                    console.log(e);
                    setLoading(false);
@@ -126,6 +130,16 @@ const HomeScreen = ({navigation}) => {
       fetchList();
       setDeleted(false);
     }, [deleted]);
+    
+    useEffect(() => {
+      fetchList();
+      navigation.addListener("focus", () => setLoadList(!loadList));
+    },  [navigation, loadList]);
+
+ 
+
+
+    
 
     const onRefresh = React.useCallback(async () => {
        setRefreshing(true);
