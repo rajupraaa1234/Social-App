@@ -2,11 +2,17 @@
 import React, { Component,useState,useContext } from 'react';
 import { View, Text, StyleSheet,ScrollView, Image,TouchableOpacity,ToastAndroid, Platform } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import FormButton from '../../../Components/FormButton';
-import FormInput from '../../../Components/FormInput';
-import SocialButton from '../../../Components/SocialButton';
+// import FormButton from '../../../Components/FormButton';
+// import FormInput from '../../../Components/FormInput';
+// import SocialButton from '../../../Components/SocialButton';
 import { AuthContext } from '../../../Utility/Navigation/AuthProvider';
 import Util from '../../../Utility/Util';
+
+import { 
+  FormButton,
+  FormInput,
+  PostItem,
+  SocialButton} from '@Components'
 
 
 // create a component
