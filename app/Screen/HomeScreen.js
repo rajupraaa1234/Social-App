@@ -106,7 +106,7 @@ const HomeScreen = ({navigation}) => {
                                     liked: false,
                                     postImg,
                                     likes,
-                                    comments,
+                                    comments,  
                                 });
                           });
                         });
